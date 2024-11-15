@@ -16,6 +16,10 @@
     - [Affichage.java](#affichagejava)
     - [SemaphoreBinaire.java](#semaphorebinairejava)
     - [Semaphore.java](#semaphorejava)
+    - [TpMobile.java](#tpmobilejava)
+    - [UnMobile.java](#unmobilejava)
+    - [SemaphoreGeneral.java](#semaphoregeneraljava)
+    - [UneFenetre.java](#unefenetrejava)
 - [Conclusion](#conclusion)
 
 ## Introduction
@@ -60,7 +64,7 @@ Dans `TP_1/UnMobile.java`, il n'y a pas d'utilisation de sémaphores, donc les m
 
 **But** : Classe d'entrée de l'application.
 
-**Utilisation du sémaphore** : Un objet `SemaphoreBinaire` est créé pour gérer l'accès à une section critique entre les threads (TA, TB, TC, TD).
+**Utilisation du sémaphore** : N'est pas utilisée directement pour l'affichage, mais gère les threads d'affichage.
 
 Chaque thread suit un cycle structuré :
 - Appel à `syncWait` avant d'entrer dans la section critique, réduisant la valeur du sémaphore. Si elle est déjà à 0, le thread attend.
@@ -69,9 +73,9 @@ Chaque thread suit un cycle structuré :
 
 ### NewAffichage.java
 
-**But** : Classe représentant un thread d'affichage, affichant chaque caractère du texte de manière séquentielle et avec un léger délai.
+**But** : Classe représentant un thread d'affichage, utilisant la classe `SemaphoreBinaire` pour gérer l'exclusion mutuelle.
 
-**Utilisation du sémaphore** : Bien que la classe elle-même n'interagisse pas directement avec le sémaphore, les instances de `NewAffichage` sont créées et gérées par les threads dans `Main.java`. L'exclusion mutuelle assurée par le sémaphore dans `Main.java` permet à chaque instance d'afficher son texte dans un environnement synchronisé.
+**Utilisation du sémaphore** : `NewAffichage` utilise un sémaphore binaire pour contrôler l'accès à la section critique. La méthode `run` appelle `syncWait` avant d'afficher le texte, puis `syncSignal` pour libérer la ressource. Cela garantit que seul un thread à la fois peut afficher le texte, évitant les conflits d'accès.
 
 ### Affichage.java
 
@@ -92,6 +96,30 @@ Chaque thread suit un cycle structuré :
 **Utilisation du sémaphore** : La classe `Semaphore` contient la logique centrale de synchronisation, gérant l'état du sémaphore via des méthodes synchronisées. La méthode `syncWait` réduit la valeur du sémaphore, indiquant qu'un thread utilise la ressource. Si la valeur est 0, le thread est mis en attente. La méthode `syncSignal` augmente la valeur, libérant la ressource pour un autre thread.
 
 Cette structure permet aux classes dérivées, comme `SemaphoreBinaire`, d'adapter le comportement tout en utilisant les fonctionnalités de base (par exemple, limiter la valeur à 1 pour un sémaphore binaire).
+
+### TpMobile.java
+
+**But** : Classe principale de l'application, gérant les threads d'affichage et les mobiles.
+
+**Utilisation du sémaphore** : Aucune
+
+### UnMobile.java
+
+**But** : Classe représentant un mobile se déplaçant dans une zone centrale.
+
+**Utilisation du sémaphore** : `UnMobile` utilise un sémaphore général pour contrôler l'accès à la zone centrale. La méthode `run` appelle `syncWait` avant d'entrer dans la zone, puis `syncSignal` pour en sortir. Cela garantit qu'un seul mobile à la fois peut occuper la zone centrale, évitant les collisions.
+
+### SemaphoreGeneral.java
+
+**But** : Classe représentant un sémaphore général, qui peut prendre des valeurs supérieures à 1.
+
+**Utilisation du sémaphore** : `SemaphoreGeneral` étend la classe abstraite `Semaphore` pour gérer l'accès à une ressource partagée par plusieurs threads. La méthode `syncSignal` est redéfinie pour permettre des valeurs supérieures à 1, contrôlant ainsi le nombre de threads pouvant accéder à la ressource simultanément.
+
+### UneFenetre.java
+
+**But** : Classe représentant une fenêtre d'affichage.
+
+**Utilisation du sémaphore** : `UneFenetre` n'utilise pas directement de sémaphores, mais elle gere les threads d'affichage et les mobiles, permettant de visualiser l'interaction entre les threads et les ressources partagées.
 
 ## Conclusion
 
