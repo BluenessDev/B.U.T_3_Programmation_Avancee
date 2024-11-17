@@ -1,10 +1,9 @@
 package TP_3.Exercice_1;
 
-public class Main {
+public class Main1 {
     public static void main(String[] args) {
         int nbMessages = 5; // Nombre de buffers disponibles
-        int tailleMessage = 10; // Taille maximale d'un message
-        BAL bal = new BAL(nbMessages, tailleMessage);
+        BAL bal = new BAL(nbMessages);
 
         Thread producteur = new Thread(new Producteur(bal, nbMessages));
         Thread consommateur = new Thread(new Consommateur(bal, nbMessages));

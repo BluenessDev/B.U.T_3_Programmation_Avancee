@@ -1,52 +1,40 @@
 package TP_3.Exercice_1;
 
-import java.nio.Buffer;
-import java.nio.ByteBuffer;
+import java.util.ArrayList;
 
 public class BAL {
-    private final Buffer[] buffer;
-    private final ByteBuffer espaceMemoire;
-    private final boolean[] etat;
+    private final ArrayList<String> buffer;
+    private final ArrayList<Boolean> etat;
+    private final int taille;
 
-    public BAL(int nbMessages, int tailleMessage) {
-        buffer = new Buffer[nbMessages];
-        espaceMemoire = ByteBuffer.allocate(nbMessages * tailleMessage);
-        etat = new boolean[nbMessages];
+    public BAL(int nbMessages) {
+        this.taille = nbMessages;
+        this.buffer = new ArrayList<>();
+        this.etat = new ArrayList<>();
+
         for (int i = 0; i < nbMessages; i++) {
-            ByteBuffer slice = espaceMemoire.slice();
-            slice.limit(tailleMessage);
-            buffer[i] = slice;
-            espaceMemoire.position(espaceMemoire.position() + tailleMessage);
+            buffer.add("");
+            etat.add(false);
         }
     }
 
-    public synchronized void write(int i, String chLettreDeposee) throws InterruptedException {
-        while (etat[i]) {
+    public synchronized void write(int index, String lettre) throws InterruptedException {
+        while (etat.get(index)) {
             wait();
         }
-        ByteBuffer byteBuffer = (ByteBuffer) buffer[i];
-        byteBuffer.clear();
-        byteBuffer.put(chLettreDeposee.getBytes());
-        byteBuffer.flip();
-        etat[i] = true;
-        System.out.println("Écrit dans le buffer " + i + ": " + chLettreDeposee); // Log de debug
+        buffer.set(index, lettre);
+        etat.set(index, true);
         notifyAll();
     }
 
-
-    public synchronized String read(int i) throws InterruptedException {
-        while (!etat[i]) {
+    public synchronized String read(int index) throws InterruptedException {
+        while (!etat.get(index)) {
             wait();
         }
-        ByteBuffer byteBuffer = (ByteBuffer) buffer[i];
-        byteBuffer.flip();
-        byte[] data = new byte[byteBuffer.remaining()];
-        byteBuffer.get(data);
-        byteBuffer.clear();
-        etat[i] = false;
-        String lettre = new String(data);
+        String lettre = buffer.get(index);
+        buffer.set(index, "");
+        etat.set(index, false);
         notifyAll();
         return lettre;
     }
-
 }

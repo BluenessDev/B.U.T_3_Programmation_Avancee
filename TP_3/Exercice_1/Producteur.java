@@ -12,14 +12,14 @@ public class Producteur implements Runnable {
     @Override
     public void run() {
         try {
-            String alphabet = "ABCDEFGH";
+            String alphabet = "ABCDEFGH"; // Lettres à produire
             for (int i = 0; i < alphabet.length(); i++) {
-                char lettre = alphabet.charAt(i);
-                bal.write(i % nbMessages, String.valueOf(lettre));
+                String lettre = String.valueOf(alphabet.charAt(i));
+                bal.write(i % nbMessages, lettre); // Écriture dans le buffer
                 System.out.println("Produit: " + lettre + " dans le buffer " + (i % nbMessages));
                 Thread.sleep(500); // Simulation de temps de production
             }
-            bal.write(0, "Q"); // Indique la fin
+            bal.write(0, "Q"); // Écrit la lettre de fin
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
