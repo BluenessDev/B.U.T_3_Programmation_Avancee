@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class InterfaceBAL {
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Simulateur BAL - Producteur et Consommateur");
+        JFrame frame = new JFrame("Simulateur Tampon Circulaire - Producteur et Consommateur");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);
 
