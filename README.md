@@ -7,6 +7,10 @@
 
 Ce dépôt regroupe les rapports et codes de mes travaux pratiques en programmation avancée Java, focalisés sur les concepts de **programmation parallèle**, **gestion de threads** et **synchronisation**. Ces TP explorent des concepts essentiels comme les **threads**, les **sémaphores** et les **sections critiques**, avec des exemples concrets et des applications graphiques en Java.
 
+## Introduction générale
+
+La programmation parallèle est un domaine essentiel de l'informatique, permettant d'optimiser les performances des applications en exécutant des tâches simultanément. En Java, la gestion des threads et la synchronisation des accès aux ressources partagées sont des compétences clés pour développer des applications robustes et efficaces. Ces TP visent à explorer ces concepts en utilisant des exemples pratiques et des exercices concrets. Les rapports détaillant les étapes de chaque TP sont accompagnés de leur diagramme UML et de leur implémentation en Java. Ils sont trouvable dans les dossiers respectifs de chaque TP ou en cliquant sur les liens ci-dessous. 
+
 ## Table des TP
 
 ### [TP 1 : Programmation parallèle et Threads avec des mobiles](./TP_1/RapportTP1.md)
@@ -25,6 +29,15 @@ Ce dépôt regroupe les rapports et codes de mes travaux pratiques en programmat
     - Création de classes de sémaphores en Java pour réguler l'accès aux ressources
 - **Résumé** : Ce TP approfondit la synchronisation des threads à l’aide de sémaphores pour gérer des affichages séquentiels. Chaque thread doit attendre son tour avant d’accéder à une section critique, ce qui permet une gestion sécurisée des ressources partagées et la prévention des conflits d’accès.
 
+### [TP 3 : Gestion de producteurs et consommateurs avec des boites aux lettres](./TP_3/RapportTP3.md)
+- **Objectif** : Illustration d'un modèle producteur-consommateur pour gérer des ressources partagées, en utilisant des boites aux lettres pour synchroniser les threads producteurs et consommateurs.
+- **Concepts abordés** :
+    - Création de threads producteur et consommateur
+    - Utilisation de verrous pour contrôler l'accès à des ressources partagées
+    - Gestion de la synchronisation entre les threads
+    - Utilisation de méthodes `wait()` et `notifyAll()` pour gérer l'attente et la notification des threads
+- **Résumé** : Ce TP explore le modèle producteur-consommateur en Java, où un producteur ajoute des éléments à une boite aux lettres partagée et un consommateur les retire. La synchronisation des threads est essentielle pour éviter les conflits d'accès et garantir une gestion sécurisée des ressources partagées.
+
 ## Utilisation
 
 - Chaque TP inclut un rapport explicatif détaillant le code et les concepts théoriques.
@@ -34,6 +47,11 @@ Ce dépôt regroupe les rapports et codes de mes travaux pratiques en programmat
 
 - **TP_1** : Contient le code et le rapport pour la gestion de threads avec des objets mobiles.
 - **TP_2** : Contient le code et le rapport pour l'implémentation de sémaphores et la synchronisation d'affichages multi-threadés.
+- **TP_3** : Contient le code et le rapport pour la gestion de producteurs et consommateurs avec des boites aux lettres partagées.
+
+## Conclusion générale
+
+Ces TP en programmation avancée Java offrent une introduction pratique à la gestion des threads, à la synchronisation et à la programmation parallèle. Les exemples concrets et les exercices pratiques permettent de mieux comprendre les concepts théoriques et d'acquérir des compétences essentielles en programmation multi-thread. Les applications graphiques et les modèles de synchronisation abordés dans ces TP sont des éléments clés pour développer des applications robustes et performantes en Java.
 
 ## Crédits
 
