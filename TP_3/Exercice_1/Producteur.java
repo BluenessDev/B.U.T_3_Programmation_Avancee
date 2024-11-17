@@ -15,11 +15,11 @@ public class Producteur implements Runnable {
             String alphabet = "ABCDEFGH"; // Lettres à produire
             for (int i = 0; i < alphabet.length(); i++) {
                 String lettre = String.valueOf(alphabet.charAt(i));
-                bal.write(i % nbMessages, lettre); // Écriture dans le buffer
-                System.out.println("Produit: " + lettre + " dans le buffer " + (i % nbMessages));
+                bal.write(lettre); // Écriture dans le buffer
+                System.out.println("Produit: " + lettre + " dans le buffer");
                 Thread.sleep(500); // Simulation de temps de production
             }
-            bal.write(0, "Q"); // Écrit la lettre de fin
+            bal.write("Q"); // Écrit la lettre de fin
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }

@@ -18,23 +18,32 @@ public class BAL {
         }
     }
 
-    public synchronized void write(int index, String lettre) throws InterruptedException {
-        while (etat.get(index)) {
+    public synchronized void write(String lettre) throws InterruptedException {
+        while (true) {
+            for (int i = 0; i < taille; i++) {
+                if (!etat.get(i)) {
+                    buffer.set(i, lettre);
+                    etat.set(i, true);
+                    notifyAll();
+                    return;
+                }
+            }
             wait();
         }
-        buffer.set(index, lettre);
-        etat.set(index, true);
-        notifyAll();
     }
 
-    public synchronized String read(int index) throws InterruptedException {
-        while (!etat.get(index)) {
+    public synchronized String read() throws InterruptedException {
+        while (true) {
+            for (int i = 0; i < taille; i++) {
+                if (etat.get(i)) {
+                    String lettre = buffer.get(i);
+                    buffer.set(i, "");
+                    etat.set(i, false);
+                    notifyAll();
+                    return lettre;
+                }
+            }
             wait();
         }
-        String lettre = buffer.get(index);
-        buffer.set(index, "");
-        etat.set(index, false);
-        notifyAll();
-        return lettre;
     }
 }

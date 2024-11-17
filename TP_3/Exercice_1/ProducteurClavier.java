@@ -17,7 +17,6 @@ public class ProducteurClavier implements Runnable {
     public void run() {
         Scanner scanner = new Scanner(System.in);
         try {
-            int i = 0;
             while (true) {
                 sleep((long) (Math.random() * 500));
                 System.out.print("Entrez une lettre (ou 'Q' pour quitter) : ");
@@ -26,9 +25,8 @@ public class ProducteurClavier implements Runnable {
                     System.out.println("Veuillez entrer une seule lettre.");
                     continue;
                 }
-                bal.write(i % nbMessages, lettre); // Écriture dans le buffer
-                System.out.println("Produit: " + lettre + " dans le buffer " + (i % nbMessages));
-                i++;
+                bal.write(lettre); // Écriture dans le buffer
+                System.out.println("Produit: " + lettre + " dans le buffer");
                 if ("Q".equals(lettre)) { // Arrêt si 'Q' est saisi
                     break;
                 }

@@ -13,13 +13,10 @@ public class Consommateur implements Runnable {
     public void run() {
         try {
             while (true) {
-                for (int i = 0; i < nbMessages; i++) {
-                    String lettre = bal.read(i); // Lecture depuis le buffer
-                    System.out.println("Consommé: " + lettre + " du buffer " + i);
-                    if ("Q".equals(lettre)) { // Arrêt lorsque 'Q' est consommé
-                        System.out.println("Fin de la consommation.");
-                        return;
-                    }
+                String lettre = bal.read(); //
+                System.out.println("Consommé: " + lettre + " du buffer");
+                if ("Q".equals(lettre)) { // Arrêt lorsque 'Q' est consomméSystem.out.println("Fin de la consommation.");
+                    return;
                 }
                 Thread.sleep(700); // Simulation de temps de consommation
             }
