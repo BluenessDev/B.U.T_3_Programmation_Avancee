@@ -5,8 +5,8 @@ public class Main2 {
         int nbMessages = 5; // Nombre de buffers
         BAL bal = new BAL(nbMessages);
 
-        Thread producteur = new Thread(new ProducteurClavier(bal, nbMessages));
-        Thread consommateur = new Thread(new Consommateur(bal, nbMessages));
+        Thread producteur = new Thread(new ProducteurClavier(bal));
+        Thread consommateur = new Thread(new Consommateur(bal));
 
         producteur.start();
         consommateur.start();

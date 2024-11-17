@@ -6,11 +6,9 @@ import static java.lang.Thread.sleep;
 
 public class ProducteurClavier implements Runnable {
     private final BAL bal;
-    private final int nbMessages;
 
-    public ProducteurClavier(BAL bal, int nbMessages) {
+    public ProducteurClavier(BAL bal) {
         this.bal = bal;
-        this.nbMessages = nbMessages;
     }
 
     @Override

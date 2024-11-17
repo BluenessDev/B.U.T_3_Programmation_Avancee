@@ -2,11 +2,9 @@ package TP_3.Exercice_1;
 
 public class Producteur implements Runnable {
     private final BAL bal;
-    private final int nbMessages;
 
-    public Producteur(BAL bal, int nbMessages) {
+    public Producteur(BAL bal) {
         this.bal = bal;
-        this.nbMessages = nbMessages;
     }
 
     @Override
