@@ -57,26 +57,39 @@ public class Assignment102 {
 			System.out.print("Nombre de processeurs (max " + availableProcessors + "): ");
 			nProcessors = scanner.nextInt();
 			if (nProcessors > availableProcessors) {
-				System.out.println("Err: Le nombre de processeur ne peut pas depasser " + availableProcessors + ".");
+				System.out.println("Err: Le nombre de processeur ne peut pas dépasser " + availableProcessors + ".");
 			}
 		} while (nProcessors > availableProcessors);
 
-		PiMonteCarlo PiVal = new PiMonteCarlo(nThrows, nProcessors);
-		long startTime = System.currentTimeMillis();
-		double value = PiVal.getPi();
-		long stopTime = System.currentTimeMillis();
+		// Measure time with a single processor
+		PiMonteCarlo singleProcessorPi = new PiMonteCarlo(nThrows, 1);
+		long singleProcessorStartTime = System.currentTimeMillis();
+		singleProcessorPi.getPi();
+		long singleProcessorStopTime = System.currentTimeMillis();
+		long singleProcessorDuration = singleProcessorStopTime - singleProcessorStartTime;
+
+		// Measure time with multiple processors
+		PiMonteCarlo multiProcessorPi = new PiMonteCarlo(nThrows, nProcessors);
+		long multiProcessorStartTime = System.currentTimeMillis();
+		double value = multiProcessorPi.getPi();
+		long multiProcessorStopTime = System.currentTimeMillis();
+		long multiProcessorDuration = multiProcessorStopTime - multiProcessorStartTime;
+
+		// Calculate speedup
+		double speedup = (double) singleProcessorDuration / multiProcessorDuration;
 
 		double errRelative = (Math.abs(value - Math.PI)) / Math.PI;
-		long duration = stopTime - startTime;
 
 		System.out.println("Err relative: " + errRelative);
 		System.out.println("nThrows: " + nThrows);
 		System.out.println("nbProcessus: " + nProcessors);
-		System.out.println("tps: " + duration + "ms");
+		System.out.println("tps: " + multiProcessorDuration + "ms");
+		System.out.println("Speedup: " + speedup);
 
 		try (FileWriter fileWriter = new FileWriter("out_assignement102_MBP.txt", true);
 			 PrintWriter printWriter = new PrintWriter(fileWriter)) {
-			printWriter.printf("Err relative: %.6f, nThrows: %d, nbProcessus: %d, tps: %dms%n", errRelative, nThrows, nProcessors, duration);
+			printWriter.printf("Err relative: %.6f, nThrows: %d, nbProcessus: %d, tps: %dms, Speedup: %.2f%n",
+					errRelative, nThrows, nProcessors, multiProcessorDuration, speedup);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

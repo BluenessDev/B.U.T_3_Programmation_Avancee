@@ -1,5 +1,8 @@
 package TP_4;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -11,21 +14,41 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 /**
- * Approximates PI using the Monte Carlo method.  Demonstrates
+ * Approximates PI using the Monte Carlo method. Demonstrates
  * use of Callables, Futures, and thread pools.
  */
 public class Pi {
 	public static void main(String[] args) throws Exception {
 		Scanner scanner = new Scanner(System.in);
 
-		System.out.print("Enter the total count of iterations: ");
+		System.out.print("Entrer le nombre total d'itérations: ");
 		int totalCount = scanner.nextInt();
 
-		System.out.print("Enter the number of workers: ");
+		System.out.print("Entrer le nombres de worker: ");
 		int numWorkers = scanner.nextInt();
 
-		long total = new Master().doRun(totalCount, numWorkers);
-		System.out.println("Total from Master = " + total);
+		Master master = new Master();
+
+		// Measure time with a single processor
+		long singleWorkerTime = master.doRun(totalCount, 1);
+		System.out.println("Time with 1 processor: " + singleWorkerTime + "ms");
+
+		// Measure time with multiple processors
+		long multiWorkersTime = master.doRun(totalCount, numWorkers);
+		System.out.println("Time with " + numWorkers + " processors: " + multiWorkersTime + "ms");
+
+		// Calculate speedup
+		double speedup = (double) singleWorkerTime / multiWorkersTime;
+		System.out.println("Speedup: " + speedup);
+
+		// Write results to file
+		try (FileWriter fileWriter = new FileWriter("out_Pi.java_MBP.txt", true);
+			 PrintWriter printWriter = new PrintWriter(fileWriter)) {
+			printWriter.printf("Speedup: %.2f, Tps 1 worker: %dms, Tps avec %d worker: %dms%n",
+					speedup, singleWorkerTime, numWorkers, multiWorkersTime);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
 
@@ -58,15 +81,23 @@ class Master {
 
 		long stopTime = System.currentTimeMillis();
 
-		System.out.println("Err relative: " + (Math.abs((pi - Math.PI)) / Math.PI) + "\n");
+		double errRelative = (Math.abs(pi - Math.PI)) / Math.PI;
+		long duration = stopTime - startTime;
+
+		System.out.println("Err relative: " + errRelative + "\n");
 		System.out.println("Ntot: " + totalCount * numWorkers);
 		System.out.println("Available processors: " + numWorkers);
-		System.out.println("Time Duration (ms): " + (stopTime - startTime) + "\n");
+		System.out.println("Time Duration (ms): " + duration + "\n");
 
-		System.out.println((Math.abs((pi - Math.PI)) / Math.PI) + " " + totalCount * numWorkers + " " + numWorkers + " " + (stopTime - startTime));
+		try (FileWriter fileWriter = new FileWriter("out_Pi.java_MBP.txt", true);
+			 PrintWriter printWriter = new PrintWriter(fileWriter)) {
+			printWriter.printf("Err relative: %.6f, nThrows: %d, nbProcessus: %d, tps: %dms%n", errRelative, totalCount, numWorkers, duration);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		exec.shutdown();
-		return total;
+		return duration;
 	}
 }
 
