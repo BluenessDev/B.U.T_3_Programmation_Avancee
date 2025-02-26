@@ -57,7 +57,7 @@ filenameFaible = computer_name + "_Pi_faible"
 filenameForte = computer_name + "_Pi_forte"
 
 # Variables
-nbLancer = 40_000_000
+nbLancer = 100_000_000
 maxProcess = 8
 
 # Renvoie le dossier actuel

@@ -49,7 +49,7 @@ def courbeFaibleScalabilite(filename):
     plt.plot(df_median["numWorkers"], [1] * len(df_median["numWorkers"]), color="red", label="Scalabilité optimale (y=1)")
     plt.xlabel("Nombre de travailleurs")
     plt.ylabel("Speedup")
-    plt.title("Faible scalabilité")
+    plt.title("Faible scalabilité de l'ordinateur " + computer_name)
     plt.legend()
     plt.grid()
     plt.savefig("faible_scalabilite_plot.png")

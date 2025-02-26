@@ -62,7 +62,7 @@ filenameForte = computer_name + "_Montecarlo_forte"
 
 # Variables
 
-nbLancer = 2_000_000
+nbLancer = 10_000_000
 maxProcess = 8
 
 # Renvoie le dossier actuel
