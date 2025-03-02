@@ -49,27 +49,27 @@ def launch_workers_for(num_workers):
     time.sleep(1)
     return workers
 
-def run_master_socket(iterations, p, mode):
+def run_master_socket(iterations, p, mode, filename):
     """
     Lance p workers, exécute assignments.MasterSocket avec les paramètres donnés,
     puis termine les workers.
     """
     compile_java_files()
     workers = launch_workers_for(p)
-    cmd = ["java", master_class_name, str(iterations), str(p), mode]
+    cmd = ["java", master_class_name, str(iterations), str(p), mode, filename]
     print("Exécution :", cmd)
     subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     for proc in workers:
         proc.kill()
     time.sleep(0.5)
 
-def run_java_program(num_throws, num_workers, name_file, mode):
+def run_java_program(num_throws, num_workers, mode, filename):
     """
     Lance le programme Java avec le nombre de lancers et de travailleurs donnés.
     """
     results = []
     for i in range(15):
-        run_master_socket(num_throws, num_workers, mode)
+        run_master_socket(num_throws, num_workers, mode, filename)
     return results
 
 # --- Main ---
@@ -82,27 +82,20 @@ filenameFaible = computer_name + "_Socket_faible"
 filenameForte = computer_name + "_Socket_forte"
 
 # Variables
-nbLancer = 1_000_000
+nbLancer = 10_000_000
 maxProcess = 8
 
 # Renvoie le dossier actuel
 current_dir = os.getcwd()
 print(f"Dossier actuel : {current_dir}")
 
-# Se déplacer dans le dossier Java
-java_dir = os.path.join(current_dir, "Socket")
-os.chdir(java_dir)
-
-for nbProcess in range(1, maxProcess + 1):
-    print(f"\n=== Test Scalabilité faible avec {nbProcess} instances ===")
-    run_java_program(int(nbLancer * nbProcess), nbProcess, "Faible")
-
-for nbProcess in range(1, maxProcess + 1):
-    print(f"\n=== Test Scalabilité forte avec {nbProcess} instances ===")
-    run_java_program(int(nbLancer), nbProcess, "Forte")
-
 CSVFort = computer_name + "_Socket_forte*.csv"
 CSVFaible = computer_name + "_Socket_faible*.csv"
 
-calcul_courbe.courbeFaibleScalabilite(CSVFaible)
-calcul_courbe.courbeForteScalabilite(CSVFort)
+for nbProcess in range(1, maxProcess + 1):
+    print(f"\n=== Test Scalabilité faible avec {nbProcess} instances ===")
+    run_java_program(int(nbLancer * nbProcess), nbProcess, "Faible", filenameFaible)
+
+for nbProcess in range(1, maxProcess + 1):
+    print(f"\n=== Test Scalabilité forte avec {nbProcess} instances ===")
+    run_java_program(int(nbLancer), nbProcess, "Forte", filenameForte)

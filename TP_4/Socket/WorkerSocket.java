@@ -35,9 +35,6 @@ public class WorkerSocket {
             if (!(str.equals("END"))){
                 System.out.println("Server receives totalCount = " +  str);
 
-                // compute
-                System.out.println("TODO : compute Monte Carlo and send total");
-
                 long total = monteCarlo(Integer.parseInt(str));
 
                 str = String.valueOf(total);

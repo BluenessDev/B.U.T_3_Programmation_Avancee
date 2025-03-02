@@ -49,7 +49,7 @@ def courbeFaibleScalabilite(filename):
     plt.plot(df_median["numWorkers"], [1] * len(df_median["numWorkers"]), color="red", label="Scalabilité optimale (y=1)")
     plt.xlabel("Nombre de travailleurs")
     plt.ylabel("Speedup")
-    plt.title("Faible scalabilité")
+    plt.title("Faible scalabilité de l'ordinateur " + computer_name)
     plt.legend()
     plt.grid()
     plt.savefig("faible_scalabilite_plot.png")
@@ -145,9 +145,8 @@ print(os.getcwd())
 os.chdir("Socket")
 print(os.getcwd())
 
-
-filenameFaible = "XP_socket_faible.csv"
-filenameForte = "XP_socket_forte.csv"
+filenameFaible = computer_name + "_Socket_faible*.csv"
+filenameForte = computer_name + "_Socket_forte*.csv"
 
 courbeFaibleScalabilite(filenameFaible)
 courbeForteScalabilite(filenameForte)

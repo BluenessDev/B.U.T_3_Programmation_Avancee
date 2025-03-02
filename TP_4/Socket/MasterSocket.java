@@ -20,17 +20,7 @@ public class MasterSocket {
         int numWorkers = Integer.parseInt(args[1]);
         String scaling = args[2]; // "forte" ou "faible"
 
-        int iterationsPerWorker;
-        int totalIterations;
-        if(scaling.equalsIgnoreCase("forte")){
-            // En forte scalabilité, le total d’itérations reste constant.
-            iterationsPerWorker = iterations / numWorkers;
-            totalIterations = iterations;
-        } else {
-            // En faible scalabilité, chaque worker traite le même nombre d’itérations.
-            iterationsPerWorker = iterations;
-            totalIterations = iterations * numWorkers;
-        }
+        int iterationsPerWorker = iterations / numWorkers;
 
         // Connexion aux workers
         for(int i = 0; i < numWorkers; i++) {
@@ -56,29 +46,23 @@ public class MasterSocket {
             totalInside += Integer.parseInt(response);
         }
 
-        double pi = 4.0 * totalInside / totalIterations;
+        double pi = 4.0 * totalInside /iterations;
         long stopTime = System.currentTimeMillis();
         long duration = stopTime - startTime;
         double error = Math.abs(pi - Math.PI) / Math.PI;
 
         System.out.println("Valeur approchée de Pi : " + pi);
         System.out.println("Erreur relative : " + error);
-        System.out.println("Itérations totales : " + totalIterations);
+        System.out.println("Itérations totales : " + iterations);
         System.out.println("Nombre de workers : " + numWorkers);
         System.out.println("Durée (ms) : " + duration);
 
-        // Choix du fichier de sortie en fonction du mode
-        String outFile;
-        if(scaling.equalsIgnoreCase("forte")){
-            outFile = "XP_socket_forte.txt";
-        } else {
-            outFile = "XP_socket_faible.txt";
-        }
+        String outFile = String.valueOf(args[3]);
 
         // Écriture des résultats dans le fichier choisi
 
         try {
-			WriteCSV.write(totalIterations, numWorkers, duration, pi, error, outFile);
+			WriteCSV.write(iterations, numWorkers, duration, pi, error, outFile);
 		} catch (IOException e) {
 			e.printStackTrace();
         }
