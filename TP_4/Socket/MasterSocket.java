@@ -9,19 +9,19 @@ public class MasterSocket {
     static BufferedReader[] reader = new BufferedReader[maxServer];
     static PrintWriter[] writer = new PrintWriter[maxServer];
     static Socket[] sockets = new Socket[maxServer];
-    static final String ip = "127.0.0.1";
+    static String ip = "127.0.0.1";
 
     public static void main(String[] args) throws Exception {
         if(args.length < 3){
             System.err.println("Usage: java assignments.MasterSocket <iterations> <numWorkers> <forte|faible>");
             return;
         }
-        int iterations = Integer.parseInt(args[0]);
+        long iterations = Integer.parseInt(args[0]);
         int numWorkers = Integer.parseInt(args[1]);
         String scaling = args[2]; // "forte" ou "faible"
 
-        int iterationsPerWorker = iterations / numWorkers;
-        int totalIterations = iterationsPerWorker * numWorkers;
+        long iterationsPerWorker = iterations / numWorkers;
+        long totalIterations = iterationsPerWorker * numWorkers;
 
         // Connexion aux workers
         for(int i = 0; i < numWorkers; i++) {
@@ -39,7 +39,7 @@ public class MasterSocket {
             writer[i].println(message_to_send);
         }
 
-        int totalInside = 0;
+        long totalInside = 0;
         // Récupération des résultats
         for(int i = 0; i < numWorkers; i++){
             String response = reader[i].readLine();
