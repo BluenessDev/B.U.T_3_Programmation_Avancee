@@ -58,6 +58,7 @@ La programmation parallèle est un domaine essentiel de l'informatique, permetta
 - **TP_1** : Contient le code et le rapport pour la gestion de threads avec des objets mobiles.
 - **TP_2** : Contient le code et le rapport pour l'implémentation de sémaphores et la synchronisation d'affichages multi-threadés.
 - **TP_3** : Contient le code et le rapport pour la gestion de producteurs et consommateurs avec des boites aux lettres partagées.
+- **TP_4** : Contient le code et le rapport pour la parallélisation du calcul de Monte Carlo et l'optimisation de la qualité du code.
 
 ## Conclusion générale
 
