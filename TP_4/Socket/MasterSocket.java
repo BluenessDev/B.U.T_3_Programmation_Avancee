@@ -16,7 +16,7 @@ public class MasterSocket {
             System.err.println("Usage: java assignments.MasterSocket <iterations> <numWorkers> <forte|faible>");
             return;
         }
-        long iterations = Integer.parseInt(args[0]);
+        long iterations = Long.parseLong(args[0]);
         int numWorkers = Integer.parseInt(args[1]);
         String scaling = args[2]; // "forte" ou "faible"
 
