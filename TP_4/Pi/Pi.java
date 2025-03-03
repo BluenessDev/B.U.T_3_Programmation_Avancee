@@ -10,7 +10,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.io.IOException;
 
 /**
  * Approximates PI using the Monte Carlo method. Demonstrates
@@ -71,11 +70,7 @@ class Master {
 		System.out.println("Pi value : " + pi);
 		System.out.println("Error: " + (Math.abs((pi - Math.PI)) / Math.PI));
 
-		try {
-			WriteCSV.write(totalIterations, numWorkers, stopTime - startTime, pi, Math.abs((pi - Math.PI)) / Math.PI, fileName);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		WriteCSV.write(totalIterations, numWorkers, totalInCircle, stopTime - startTime, pi, Math.abs((pi - Math.PI)) / Math.PI, fileName);
 
 		exec.shutdown();
 		return totalInCircle;
