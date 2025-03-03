@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>Programmation Avancée BUT Informatique 2024-2025</h1>
+  <h1>Programmation Avancée et Qualité de Développement BUT Informatique 2024-2025</h1>
   <a href="https://fr.wikipedia.org/wiki/Java_(langage)"><img src="https://img.shields.io/badge/Java-red?style=for-the-badge&logo=visualstudiocode"/></a>
 </div>
 
@@ -37,6 +37,16 @@ La programmation parallèle est un domaine essentiel de l'informatique, permetta
     - Gestion de la synchronisation entre les threads
     - Utilisation de méthodes `wait()` et `notifyAll()` pour gérer l'attente et la notification des threads
 - **Résumé** : Ce TP explore le modèle producteur-consommateur en Java, où un producteur ajoute des éléments à une boite aux lettres partagée et un consommateur les retire. La synchronisation des threads est essentielle pour éviter les conflits d'accès et garantir une gestion sécurisée des ressources partagées.
+
+### [TP 4 : Monte Carlo, Parallélisation et Qualité de code](./TP_4/Rapport_Partie2.md)
+- **Objectif** : Utilisation de la programmation parallèle pour accélérer le calcul de l'approximation de Pi par la méthode de Monte Carlo, en optimisant la qualité du code et la performance de l'application.
+- **Concepts abordés** :
+    - Parallélisation du calcul de Monte Carlo
+    - Optimisation de la qualité du code
+    - Mesure de la performance et de l'efficacité de l'application
+    - Analyse des résultats et des améliorations possibles
+    - Application des bonnes pratiques de programmation graces aux normes de qualité
+- **Résumé** : Ce TP met en œuvre la parallélisation du calcul de Monte Carlo pour accélérer l'approximation de Pi. L'optimisation de la qualité du code et l'analyse des performances permettent d'identifier les points d'amélioration et de garantir une exécution efficace de l'application.
 
 ## Utilisation
 
