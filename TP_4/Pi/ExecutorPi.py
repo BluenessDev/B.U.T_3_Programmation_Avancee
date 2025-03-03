@@ -28,8 +28,8 @@ def run_java_program(num_throws, num_workers, name_file, mode):
 
     results = []
 
-    # Exécuter le programme Java 15 fois
-    for i in range(15):
+    # Exécuter le programme Java 5 fois
+    for i in range(5):
         run_command = ["java", class_name, str(num_throws), str(num_workers), name_file]
         print(f"Exécution du programme Java ({mode}, tentative {i + 1}, workers : {num_workers})...")
         try:
@@ -57,20 +57,12 @@ filenameFaible = computer_name + "_Pi_faible"
 filenameForte = computer_name + "_Pi_forte"
 
 # Variables
-nbLancer = 100_000_000
+nbLancer = 20_000_000
 maxProcess = 8
 
 # Renvoie le dossier actuel
 current_dir = os.getcwd()
 print(f"Dossier actuel : {current_dir}")
-
-# Retirer les fichiers CSV existants
-for filename in [filenameFaible, filenameForte]:
-    for ext in ["csv", "png"]:
-        file = f"{filename}.{ext}"
-        if os.path.exists(file):
-            os.remove(file)
-            print(f"Fichier {file} supprimé.")
 
 for nbProcess in range(1, maxProcess + 1):
     print(f"\n=== Test Scalabilité faible avec {nbProcess} process ===")

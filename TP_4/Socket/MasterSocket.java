@@ -21,6 +21,7 @@ public class MasterSocket {
         String scaling = args[2]; // "forte" ou "faible"
 
         int iterationsPerWorker = iterations / numWorkers;
+        int totalIterations = iterationsPerWorker * numWorkers;
 
         // Connexion aux workers
         for(int i = 0; i < numWorkers; i++) {
@@ -46,14 +47,14 @@ public class MasterSocket {
             totalInside += Integer.parseInt(response);
         }
 
-        double pi = 4.0 * totalInside /iterations;
+        double pi = 4.0 * totalInside /totalIterations;
         long stopTime = System.currentTimeMillis();
         long duration = stopTime - startTime;
         double error = Math.abs(pi - Math.PI) / Math.PI;
 
         System.out.println("Valeur approchée de Pi : " + pi);
         System.out.println("Erreur relative : " + error);
-        System.out.println("Itérations totales : " + iterations);
+        System.out.println("Itérations totales : " + totalIterations);
         System.out.println("Nombre de workers : " + numWorkers);
         System.out.println("Durée (ms) : " + duration);
 
@@ -62,7 +63,7 @@ public class MasterSocket {
         // Écriture des résultats dans le fichier choisi
 
         try {
-			WriteCSV.write(iterations, numWorkers, duration, pi, error, outFile);
+			WriteCSV.write(totalIterations, numWorkers, duration, pi, error, outFile);
 		} catch (IOException e) {
 			e.printStackTrace();
         }

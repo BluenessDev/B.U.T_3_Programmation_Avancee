@@ -40,7 +40,6 @@ def launch_workers_for(num_workers):
     """
     workers = []
     for i in range(num_workers):
-        compile_java_files()
         port = WORKER_PORTS[i]
         cmd = ["java", worker_class_name, str(port)]
         print(f"Lancement du worker sur le port {port} : {' '.join(cmd)}")
@@ -54,7 +53,6 @@ def run_master_socket(iterations, p, mode, filename):
     Lance p workers, exécute assignments.MasterSocket avec les paramètres donnés,
     puis termine les workers.
     """
-    compile_java_files()
     workers = launch_workers_for(p)
     cmd = ["java", master_class_name, str(iterations), str(p), mode, filename]
     print("Exécution :", cmd)
@@ -82,7 +80,7 @@ filenameFaible = computer_name + "_Socket_faible"
 filenameForte = computer_name + "_Socket_forte"
 
 # Variables
-nbLancer = 10_000_000
+nbLancer = 100_000_000
 maxProcess = 8
 
 # Renvoie le dossier actuel
@@ -91,6 +89,16 @@ print(f"Dossier actuel : {current_dir}")
 
 CSVFort = computer_name + "_Socket_forte*.csv"
 CSVFaible = computer_name + "_Socket_faible*.csv"
+
+# Retirer les fichiers CSV existants
+for filename in [filenameFaible, filenameForte]:
+    for ext in ["csv", "png"]:
+        file = f"{filename}.{ext}"
+        if os.path.exists(file):
+            os.remove(file)
+            print(f"Fichier {file} supprimé.")
+
+compile_java_files()
 
 for nbProcess in range(1, maxProcess + 1):
     print(f"\n=== Test Scalabilité faible avec {nbProcess} instances ===")

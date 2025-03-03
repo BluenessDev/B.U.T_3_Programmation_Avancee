@@ -62,20 +62,12 @@ filenameForte = computer_name + "_Montecarlo_forte"
 
 # Variables
 
-nbLancer = 10_000_000
+nbLancer = 1_000_000
 maxProcess = 8
 
 # Renvoie le dossier actuel
 current_dir = os.getcwd()
 print(f"Dossier actuel : {current_dir}")
-
-# Retirer les fichiers CSV existants
-for filename in [filenameFaible, filenameForte]:
-    for ext in ["csv", "png"]:
-        file = f"{filename}.{ext}"
-        if os.path.exists(file):
-            os.remove(file)
-            print(f"Fichier {file} supprimé.")
 
 # Retirer les fichiers CSV existants
 for filename in [filenameFaible, filenameForte]:
@@ -97,8 +89,5 @@ for nbProcess in range(1, maxProcess + 1):
 CSVFort = computer_name + "_Montecarlo_forte*.csv"
 CSVFaible = computer_name + "_Montecarlo_faible*.csv"
 
-calcul_courbe.courbeFaibleScalabilite(CSVFaible)
-calcul_courbe.courbeForteScalabilite(CSVFort)
-calcul_courbe.nuageDePointsTauxErreur(CSVFaible)
 
 
