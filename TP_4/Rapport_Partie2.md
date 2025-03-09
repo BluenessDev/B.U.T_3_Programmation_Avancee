@@ -218,7 +218,7 @@ Les `Future` sont des containers qui permettent de récupérer le résultat d'un
 
 Dans notre cas, on utilise les `Future` pour paralléliser les tâches de génération de points aléatoires et de comptage des points dans le quart de disque en garantissant l'indépendance des tâches.
 
-<img src="" alt="Diagramme de classe de Pi.java" width="500"/>
+<img src="img/DiagrammePIjava.png" alt="Diagramme de classe de Pi.java" width="500"/>
 
 *Diagramme de classe de Pi.java*
 
@@ -261,7 +261,7 @@ L'API `Concurrent` est une API qui permet de gérer les tâches concurrentes en 
 
 Dans notre cas, on utilise l'API `Concurrent` pour paralléliser les tâches de génération de points aléatoires et de comptage des points dans le quart de disque en garantissant l'indépendance des tâches.
 
-<img src="" alt="Diagramme de classe de Assignment102.java" width="500"/>
+<img src="img/DiagrammeAssignment102java.png" alt="Diagramme de classe de Assignment102.java" width="500"/>
 
 *Diagramme de classe de Assignment102.java*
 
@@ -476,7 +476,7 @@ Pour évaluer l'efficacité de `Pi.java` sur l'approximation de Pi, on va analys
 
 <img src="Pi/taux_erreur_plot.png" alt="Nuage de points de l'efficacité de Pi.java" width="500"/>
 
-On remarque que l'efficacité de `Pi.java` est assez bonne avec un taux d'erreur moyen entre **$10^{-4}$** et **$10^{-5}$** pour un nombre de points de l'ordre de $10^8$. La médiane des taux d'erreur est d'environ **$10^{-5}$**. Elle a cependant tendance à **décroitre** quand le nombre de points augmente.
+On remarque que l'efficacité de `Pi.java` est assez bonne avec un taux d'erreur moyen entre **$10^{-4}$** et **$10^{-5}$** pour un nombre de points de l'ordre de $10^8$. La médiane des taux d'erreur est d'environ **$10^{-5}$**. Elle a tendance à **décroitre** quand le nombre de points augmente.
 
 #### **2. Assignment102.java**
 
@@ -587,9 +587,9 @@ Pour cela, on va analyser un nombre de points représentant la moyenne des taux 
 
 <img src="Assignement/taux_erreur_plot.png" alt="Nuage de points de l'efficacité de Assignment102.java" width="500"/>
 
-On remarque que l'efficacité de `Assignment102.java` est un tout petit peu mieux que celle de `Pi.java` avec un taux d'erreur moyen entre **$10^{-4}$** et **$10^{-5}$** pour un nombre de points de l'ordre de $10^7$. La médiane des taux d'erreur se rapproche plus de **$10^{-4}$** comparé à **$10^{-5}$** pour `Pi.java`. Elle a cependant tendance à **décroitre** quand le nombre de points augmente sans ne jamais descendre en dessous de **$10^{-5}$**.
+On remarque que l'efficacité de `Assignment102.java` est un tout petit peu moins bien que celle de `Pi.java` avec un taux d'erreur moyen entre **$10^{-4}$** et **$10^{-5}$** pour un nombre de points de l'ordre de $10^7$. La médiane des taux d'erreur se rapproche plus de **$10^{-4}$** comparé à **$10^{-5}$** pour `Pi.java`. Elle a cependant tendance à **décroitre** quand le nombre de points augmente sans ne jamais descendre en dessous de **$10^{-5}$**.
 
-Bien que l'erreur soit plus faible, l'efficacité de `Assignment102.java` est moins bonne que celle de `Pi.java` en termes de taux d'erreur moyen. Il est donc difficile de dire si l'implémentation de `Assignment102.java` est plus efficace que celle de `Pi.java` en termes de précision.
+L'efficacité de `Assignment102.java` est moins bonne que celle de `Pi.java` en termes de taux d'erreur moyen. Il est donc difficile de dire si l'implémentation de `Assignment102.java` est plus efficace que celle de `Pi.java` en termes de précision.
 
 ## **5. Mise en œuvre et performance Master/Worker en mémoire distribuée**
 
@@ -607,7 +607,7 @@ On va donc étudier la mise en œuvre de l'algorithme en Master/Worker en mémoi
 
 Dans cette architecture, le Master est utilisé pour initialiser Monte Carlo et envoyer des tâches aux Workers. Les Workers exécutent Monte Carlo et renvoient les résultats au Master. Le Master agrège les résultats et calcule l'approximation de Pi.
 
-<img src="" alt="Diagramme de classe de l'architecture Master/Worker en mémoire distribuée" width="500"/>
+<img src="img/DiagrammeMW.png" alt="Diagramme de classe de l'architecture Master/Worker en mémoire distribuée" width="500"/>
 
 *Diagramme de classe de l'architecture Master/Worker en mémoire distribuée*
 
@@ -622,10 +622,6 @@ Pour lancer l'algorithme en Master/Worker en mémoire distribuée, on exécute d
 Pour finaliser l'implémentation de l'algorithme en Master/Worker en mémoire distribuée, j'ai dû modifier la classe `WorkerSocket.java` pour qu'elle fasse la méthode de Monte Carlo et renvoie les résultats au master socket.
 
 On a donc ajouté une méthode `monteCarlo` à `WorkerSocket.java` qui prend en argument le nombre de points à générer et renvoie le nombre de points dans le quart de disque.
-
-<img src="" alt="Diagramme de classe de WorkerSocket.java" width="500"/>
-
-*Diagramme de classe mise à jour de WorkerSocket.java*
 
 Voici le code ajouté à `WorkerSocket.java` :
 
@@ -751,9 +747,9 @@ On observe que le speedup **décroit légèrement** avec le nombre de process qu
 
 Pour évaluer l'efficacité de l'algorithme en Master/Worker en mémoire distribuée sur l'approximation de Pi, on va analyser un nombre de points représentant la moyenne des taux d'erreur en fonction du nombre de points.
 
-<img src="Socket/taux_erreur_plot.png" alt="Nuage de points de l'efficacité de l'algorithme en Master/Worker en mémoire distribuée" width="500"/>
+<img src="Socket/MWtaux_erreur_plot.png" alt="Nuage de points de l'efficacité de l'algorithme en Master/Worker en mémoire distribuée" width="500"/>
 
-On remarque que l'efficacité de l'algorithme en Master/Worker en mémoire distribuée est **équivalente** à celle de `Pi.java` avec un taux d'erreur moyen entre **$10^{-4}$** et **$10^{-5}$** pour un nombre de points de l'ordre de $10^8$. La médiane des taux d'erreur se rapproche plus de **$10^{-5}$** comparé à **$10^{-4}$** pour `Pi.java`. Elle a cependant tendance à **décroitre** quand le nombre de points augmente sans ne jamais descendre en dessous de **$10^{-5}$**.
+On remarque que l'efficacité de l'algorithme en Master/Worker en mémoire distribuée est **équivalente** à celle de `Pi.java` avec un taux d'erreur moyen entre **$10^{-4}$** et **$10^{-5}$** pour un nombre de points de l'ordre de $10^8$. La médiane des taux d'erreur se rapproche plus de **$10^{-5}$** comparé à **$10^{-4}$** pour `Pi.java`. Elle a tendance à **décroitre** quand le nombre de points augmente en descendant même en dessous de **$10^{-5}$**.
 
 L'erreur est donc **plus faible** que celle de `Assignment102.java` mais **moins faible** que celle de `Pi.java`. L'efficacité de l'algorithme en Master/Worker en mémoire distribuée est donc **meilleure** que celle de `Assignment102.java` mais **moins bonne** que celle de `Pi.java` en termes de précision pour un meme nombre de points.
 
@@ -829,7 +825,68 @@ En conclusion, l'algorithme en Master/Worker en mémoire partagée est le plus p
 
 ## **7. Mise en place de Master/Worker en mémoire distribuée sur un cluster**
 
-A suivre.
+Dans la partie précédente, nous avons vu que l'algorithme en Master/Worker en mémoire partagée est le plus performant en termes de scalabilité forte et faible et d'efficacité. Sauf que nous l'avons testé sur une seule machine. Nous allons maintenant le porter sur un cluster pour voir comment il se comporte.
+
+On a donc porté l'algorithme en Master/Worker en mémoire partagée sur les machines de la salle G26 en utilisant la bibliothèque `java.net` pour la communication entre le Master et les Workers. On a utilisé des sockets pour envoyer des tâches aux Workers qui les exécutent et renvoient les résultats au Master.
+
+Voici les étapes pour mettre en place l'algorithme en Master/Worker en mémoire distribuée sur un cluster :
+
+1. **Configurer les machines du cluster :** Il faut configurer les machines du cluster pour qu'elles puissent communiquer entre elles. Il faut aussi installer l'outil de développement Java sur toutes les machines du cluster avec la commande `yum install java-devel` pour les machines CentOS.
+2. **Ouvrir les ports :** Il faut ouvrir les ports sur les machines du cluster pour permettre la communication entre le Master et les Workers. Dans notre cas, nous avons désativé le pare-feu pour faciliter la communication avec la commande `systemctl stop firewalld`. **Attention :** Pour éviter de surcharger les ports, il est recommandé d'utiliser des ports distincts pour chaque Worker si ceux-ci sont sur la même machine.
+3. **Lancer les instances de WorkerSocket.java :** Il faut lancer les instances de `WorkerSocket.java` sur les machines du cluster en leur donnant en argument le port sur lequel ils doivent lire et écrire des données. Pour cela, il faut d'abord compiler le code avec la commande `javac -d . *.java` puis lancer les instances avec la commande `java WorkerSocket <port>`.
+4. **Lancer l'instance de MasterSocket.java :** Il faut lancer l'instance de `MasterSocket.java` sur une machine du cluster en lui donnant en argument le nombre de points à générer, les ports des Workers et l'adresse IP des Workers. Pour cela, il faut d'abord compiler le code avec la commande `javac -d . *.java` puis lancer l'instance avec la commande `java MasterSocket <nombre de points> <port1> <port2> ... <adresse IP1> <adresse IP2> ...`.
+5. **Éxecution de l'algorithme :** Le Master envoie des tâches aux Workers qui les exécutent et renvoient les résultats au Master. A noter que  nous avons exécuté 4 instances de `WorkerSocket.java` sur les machines.
+
+### **A. Résultats de l'exécution de l'algorithme en Master/Worker en mémoire distribuée sur un cluster**
+
+Les résultats de l'exécution de l'algorithme en Master/Worker en mémoire distribuée sur un cluster sont les suivants :
+
+| Nombre de points | Nombre de process | Temps d'exécution (ms) | Approximation de Pi | Taux d'erreur          |
+|------------------|-------------------|------------------------|---------------------|------------------------|
+| 6.40E+10         | 1                 | 68607                  | 3.141592653589793   | 2.89E-06               |
+| 6.40E+10         | 1                 | 68974                  | 3.141592653589793   | 1.56E-05               |
+| 6.40E+10         | 1                 | 68039                  | 3.141592653589793   | 2.36E-05               |
+| 6.40E+10         | 1                 | 67340                  | 3.141592653589793   | 5.67E-06               |
+| 6.40E+10         | 32                | 71908                  | 3.141592653589793   | 1.02E-05               |
+| 6.40E+10         | 64                | 70890                  | 3.141592653589793   | 1.074792104395961E-05  |
+| 6.40E+10         | 64                | 35871                  | 3.141592653589793   | 2.4265844219156785E-06 |
+| 6.40E+10         | 64                | 40593                  | 3.141592653589793   | 2.4265844219156785E-06 |
+| 6.40E+10         | 64                | 36838                  | 3.141592653589793   | 2.4265844219156785E-06 |
+
+*Tableau des résultats de l'algorithme en Master/Worker en mémoire distribuée sur un cluster pour la scalabilité forte pour 64 000 000 000 de points*
+
+La courbe de scalabilité forte de l'algorithme en Master/Worker en mémoire distribuée sur un cluster est la suivante :
+
+<img src="img/MWforte_scalabilite_plot.png" alt="Courbe de scalabilité forte de l'algorithme en Master/Worker en mémoire distribuée sur un cluster" width="500"/>
+
+On observe que le speedup **reste constant** avec le nombre de points générés. Il ne varie pas beaucoup et reste autour de **1**. La scalabilité forte est donc mitigée.
+
+
+| Nombre de points | Nombre de process | Temps d'exécution (ms) | Approximation de Pi | Taux d'erreur          |
+|------------------|-------------------|------------------------|---------------------|------------------------|
+| 2.00E+09         | 1                 | 68607                  | 3.141592653589793   | 2.88783786E-06         |
+| 4.00E+09         | 2                 | 69607                  | 3.141592653589793   | 2.88783786E-06         |
+| 8.00E+09         | 4                 | 70436                  | 3.141592653589793   | 1.074792104395961E-5   |
+| 1.60E+10         | 8                 | 70450                  | 3.141592653589793   | 4.610508550924495E-6   |
+| 3.20E+10         | 16                | 70485                  | 3.141592653589793   | 1.2763940615949628E-6  |
+| 6.40E+10         | 32                | 71908                  | 3.141592653589793   | 1.074792104395961E-5   |
+| 6.40E+10         | 64                | 35871                  | 3.141592653589793   | 2.4265844219156785E-06 |
+
+*Tableau des résultats de l'algorithme en Master/Worker en mémoire distribuée sur un cluster pour la scalabilité faible pour 2 000 000 000 de points*
+
+La courbe de scalabilité faible de l'algorithme en Master/Worker en mémoire distribuée sur un cluster est la suivante :
+
+<img src="img/MWfaible_scalabilite_plot.png" alt="Courbe de scalabilité faible de l'algorithme en Master/Worker en mémoire distribuée sur un cluster" width="500"/>
+
+On observe que le speedup **dimunue** avec le nombre de process qui **augmente**. Le speedup passe en dessous de **0.8** pour 32 process et **monte en flèche** pour 64 process.
+
+Enfin, l'efficacité de l'algorithme en Master/Worker en mémoire distribuée sur un cluster est la suivante :
+
+<img src="img/MWtaux_erreur_plot.png" alt="Nuage de points de l'efficacité de l'algorithme en Master/Worker en mémoire distribuée sur un cluster" width="500"/>
+
+On remarque que l'efficacité de l'algorithme en Master/Worker en mémoire distribuée sur un cluster est autour de **$10^{-5}$** pour un nombre de points de l'ordre de $10^10$. La médiane des taux d'erreur se retrouve entre **$10^{-5}$** et **$10^{-6}$**. L'erreur est donc **plus faible** que celle de `Assignment102.java` mais **moins faible** que celle de `Pi.java`. L'efficacité de l'algorithme en Master/Worker en mémoire distribuée sur un cluster est donc **meilleure** que celle de `Assignment102.java` mais **moins bonne** que celle de `Pi.java` en termes de précision pour un meme nombre de points.
+
+Pour résumer, la scalabilité forte de l'algorithme en Master/Worker en mémoire distribuée sur un cluster est **mitigée**. Le speedup reste constant autour de **1**. La scalabilité faible est **moins bonne** que celle de l'algorithme en Master/Worker en mémoire partagée. Le speedup passe en dessous de **0.8** pour 32 process et **monte en flèche** pour 64 process.
 
 ## **8. Qualité de développement**
 
